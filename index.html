@@ -12,7 +12,7 @@
             background-color: #f5f5f5;
         }
         header {
-            background-color: #ee8308;
+            background-color: #ff880a;
             text-align: center;
             padding: 20px;
         }
@@ -35,6 +35,49 @@
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Gallery background support */
+        .gallery {
+            --gallery-bg: url('./Images/galleryBG.jpg'); /* update path as needed */
+            background-image: var(--gallery-bg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Darken edges, add subtle center highlight so carousel images pop */
+        .gallery::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45); /* slightly darker to increase contrast */
+            z-index: 0;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+        /* Soft centered vignette/highlight */
+        .gallery::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 25%, rgba(0,0,0,0) 60%);
+            z-index: 0;
+            border-radius: 10px;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+        /* Make gallery children sit above the overlay */
+        .gallery > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Make carousel images pop: subtle shadow and boost contrast */
+        .carousel-image {
+            box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+            filter: contrast(1.06) saturate(1.05);
         }
 
         /* Carousel Styles 🔧 */
@@ -208,9 +251,9 @@
 
 <section class="resources">
     <h2>चालू सहकार्य</h2>
-    <img src="resource1.jpg" alt="Resource">
-    <img src="resource2.jpg" alt="Resource">
-    <img src="resource3.jpg" alt="Resource">
+    <img  src="./Images/bannerImg_1.jpeg" alt="Resource">
+    <img src="./Images/bannerImg_2.jpeg" alt="Resource">
+    <img src="./Images/bannerImg_3.jpeg" alt="Resource">
 </section>
 
 <section class="video-gallery">
