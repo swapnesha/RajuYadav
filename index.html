@@ -36,6 +36,86 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
+        /* Carousel Styles 🔧 */
+        /* Center the carousel and limit width for web */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            max-width: 700px; /* center width */
+            margin: 0 auto;   /* center horizontally */
+        }
+        .carousel-track-container {
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            width: 100%;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Slightly reduced image height for web and maintain cover */
+        .carousel-image {
+            max-width: 100%;
+            height: 300px;    /* smaller height for web */
+            width: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            display: block;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-button.prev { left: 6px; }
+        .carousel-button.next { right: 6px; }
+        .carousel-dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: none;
+            margin: 0 5px;
+            background: #ddd;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .carousel-dot.current-slide {
+            background: #333;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 700px) and (max-width: 1024px) {
+            .carousel { max-width: 95%; }
+            .carousel-image { height: 240px; }
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -80,6 +160,10 @@
             cursor: pointer;
             font-size: 16px;
         }
+        .pampletImg{
+            width: 200px;
+            height: 200px;
+        }
     </style>
 </head>
 <body>
@@ -98,10 +182,28 @@
 
 <section class="gallery">
     <h2>कार्य गॅलरी</h2>
-    <img src="image1.jpg" alt="Gallery Image">
-    <img src="image2.jpg" alt="Gallery Image">
-    <img src="image3.jpg" alt="Gallery Image">
-    <img src="image4.jpg" alt="Gallery Image">
+    <div class="carousel" aria-roledescription="carousel">
+        <button class="carousel-button prev" aria-label="Previous slide">&#10094;</button>
+        <div class="carousel-track-container">
+            <ul class="carousel-track">
+                <li class="carousel-slide current-slide">
+                    <img class="carousel-image" src="./pamplet1.jpeg" alt="Pamplet 1">
+                </li>
+                <li class="carousel-slide">
+                    <img class="carousel-image" src="./pamplet2.jpeg" alt="Pamplet 2">
+                </li>
+                <li class="carousel-slide">
+                    <img class="carousel-image" src="./pamplet3.jpeg" alt="Pamplet 3">
+                </li>
+            </ul>
+        </div>
+        <button class="carousel-button next" aria-label="Next slide">&#10095;</button>
+        <div class="carousel-dots">
+            <button class="carousel-dot current-slide" aria-label="Slide 1"></button>
+            <button class="carousel-dot" aria-label="Slide 2"></button>
+            <button class="carousel-dot" aria-label="Slide 3"></button>
+        </div>
+    </div>
 </section>
 
 <section class="resources">
@@ -149,6 +251,67 @@
         const modal = document.getElementById('modal');
         modal.style.display = 'none';
     });
+
+    // Carousel functionality
+    (function() {
+        const track = document.querySelector('.carousel-track');
+        if (!track) return;
+        const slides = Array.from(track.children);
+        const nextButton = document.querySelector('.carousel-button.next');
+        const prevButton = document.querySelector('.carousel-button.prev');
+        const dotsNav = document.querySelector('.carousel-dots');
+        const dots = dotsNav ? Array.from(dotsNav.children) : [];
+
+        const setSlidePosition = (slide, index) => {
+            slide.style.left = (index * 100) + '%';
+        };
+        slides.forEach(setSlidePosition);
+
+        let currentIndex = slides.findIndex(s => s.classList.contains('current-slide'));
+        if (currentIndex < 0) currentIndex = 0;
+
+        function moveToSlide(targetIndex) {
+            track.style.transform = 'translateX(-' + (targetIndex * 100) + '%)';
+            slides.forEach(s => s.classList.remove('current-slide'));
+            slides[targetIndex].classList.add('current-slide');
+            if (dots.length) {
+                dots.forEach(d => d.classList.remove('current-slide'));
+                dots[targetIndex].classList.add('current-slide');
+            }
+            currentIndex = targetIndex;
+        }
+
+        function showNext() {
+            moveToSlide((currentIndex + 1) % slides.length);
+        }
+        function showPrev() {
+            moveToSlide((currentIndex - 1 + slides.length) % slides.length);
+        }
+
+        let autoplay = setInterval(showNext, 4000);
+        function resetAutoplay() {
+            clearInterval(autoplay);
+            autoplay = setInterval(showNext, 4000);
+        }
+
+        if (nextButton) nextButton.addEventListener('click', () => { showNext(); resetAutoplay(); });
+        if (prevButton) prevButton.addEventListener('click', () => { showPrev(); resetAutoplay(); });
+
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => { moveToSlide(idx); resetAutoplay(); });
+        });
+
+        const carousel = document.querySelector('.carousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => clearInterval(autoplay));
+            carousel.addEventListener('mouseleave', () => resetAutoplay());
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+        });
+    })();
 </script>
 
 </body>
