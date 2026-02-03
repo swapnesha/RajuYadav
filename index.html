@@ -159,6 +159,122 @@
             .carousel-image { height: 240px; }
         }
 
+        /* Video gallery responsive grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            justify-items: center;
+            align-items: start;
+        }
+        .video-gallery iframe, .video-gallery .video-iframe {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border: 0;
+            border-radius: 8px;
+            display: block;
+            margin: 10px auto;
+        }
+        @media (max-width: 760px) {
+            .video-grid { grid-template-columns: 1fr; }
+            .video-gallery iframe, .video-gallery .video-iframe { height: 240px; max-width: 100%; }
+        }
+
+        .video-fallback {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        .video-fallback a { color: #0066cc; text-decoration: underline; }
+
+        /* Instagram reel/embed styling */
+        .instagram-reels {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            justify-items: center;
+            align-items: start;
+        }
+        .instagram-reels .insta-grid {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+        .instagram-reels img { max-width: 160px; border-radius: 6px; }
+        .instagram-reels .insta-embed { width: 100%; max-width: 540px; }
+        .instagram-reels .insta-fallback { font-size: 14px; text-align: center; margin-top: 8px; }
+        .instagram-reels .insta-fallback a { color: #0066cc; text-decoration: underline; }
+
+        /* Thumbnail for opening reel in modal */
+        .insta-thumb {
+            cursor: pointer;
+            width: 160px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            transition: transform .12s ease, box-shadow .12s ease;
+            position: relative;
+        }
+        .insta-thumb:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.18); }
+        .insta-thumb::after {
+            content: '\25B6'; /* play icon */
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* Modal for instagram reel */
+        .insta-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.85);
+            z-index: 3000;
+            padding: 20px;
+        }
+        .insta-modal.open { display:flex; }
+        .insta-modal-content {
+            background: #fff;
+            border-radius: 10px;
+            max-width: 720px;
+            width: 100%;
+            padding: 12px;
+            position: relative;
+        }
+        .insta-modal .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #ff4444;
+            width: 36px;
+            height: 36px;
+            font-size: 18px;
+            border-radius: 50%;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .insta-modal .insta-modal-body { text-align: center; }
+        .insta-modal .insta-modal-body .instagram-media { margin: 0 auto; }
+        .insta-modal .insta-modal-body iframe { width: 100%; max-width: 540px; height: 540px; border: 0; }
+        @media (max-width: 760px) { .insta-modal .insta-modal-body iframe { height: 420px; } }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -338,15 +454,42 @@
 
 <section class="video-gallery">
     <h2>व्हिडिओ गॅलरी</h2>
-    <iframe src="https://www.youtube.com/embed/example" frameborder="0" allowfullscreen></iframe>
+    <div class="video-grid">
+        <iframe class="video-iframe" src="https://www.youtube.com/embed/example" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Sample video"></iframe>
+        <iframe class="video-iframe" src="https://www.youtube-nocookie.com/embed/g84ki1m-Mrc" frameborder="0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen title="Added video"></iframe>
+    </div>
 </section>
 
 <section class="instagram-reels">
     <h2>Instagram Reels</h2>
-    <img src="reel1.jpg" alt="Reel">
-    <img src="reel2.jpg" alt="Reel">
-    <img src="reel3.jpg" alt="Reel">
-</section>
+    <div class="insta-grid">
+        <!-- Thumbnail that opens modal -->
+        <img class="insta-thumb" src="./Images/reelThumbs/reelThumb_1.png" alt="Reel thumbnail" data-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/">
+        <img class="insta-thumb" src="./Images/reelThumbs/reelThumb_1.png" alt="Reel thumbnail" data-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/">
+        <img class="insta-thumb" src="./Images/reelThumbs/reelThumb_1.png" alt="Reel thumbnail" data-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/">
+    </div>
+
+    <div class="insta-embed" style="margin-top:12px;">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:99%; padding:0;">
+            <div style="padding:16px;">
+                <a href="https://www.instagram.com/reel/DUTIT3bDXZZ/" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a>
+            </div>
+        </blockquote>
+        <script async defer src="//www.instagram.com/embed.js"></script>
+        <div class="insta-fallback">If the reel doesn't load here, <a href="https://www.instagram.com/reel/DUTIT3bDXZZ/" target="_blank" rel="noopener noreferrer">open it on Instagram</a>.</div>
+    </div>
+
+    <!-- Modal for playing reel on same page -->
+    <div class="insta-modal" id="insta-modal" aria-hidden="true">
+        <div class="insta-modal-content" role="dialog" aria-modal="true">
+            <button class="close-btn" id="insta-close" aria-label="Close">&times;</button>
+            <div class="insta-modal-body" id="insta-modal-body">
+                <!-- blockquote is injected here when modal opens -->
+                <div class="insta-fallback">If the reel doesn't load here, <a href="https://www.instagram.com/reel/DUTIT3bDXZZ/" target="_blank" rel="noopener noreferrer">open it on Instagram</a>.</div>
+            </div>
+        </div>
+    </div>
+</section> 
 
 <footer>
     <p>&copy; 2026 Profile Page</p>
@@ -545,6 +688,80 @@
             if (e.key === 'ArrowRight') showNext();
             if (e.key === 'ArrowLeft') showPrev();
         });
+    })();
+
+    // Instagram modal for reel thumbnail
+    (function() {
+        const thumbs = Array.from(document.querySelectorAll('.insta-thumb'));
+        if (!thumbs.length) return;
+        const modal = document.getElementById('insta-modal');
+        const modalBody = document.getElementById('insta-modal-body');
+        const closeBtn = document.getElementById('insta-close');
+
+        function loadInstagramEmbedScript(cb) {
+            if (window.instgrm && typeof window.instgrm.Embeds !== 'undefined') {
+                cb();
+                return;
+            }
+            // load script once
+            if (document.querySelector('script[src="//www.instagram.com/embed.js"]')) {
+                // wait for it to initialize
+                const t = setInterval(() => {
+                    if (window.instgrm && window.instgrm.Embeds) {
+                        clearInterval(t);
+                        cb();
+                    }
+                }, 150);
+                return;
+            }
+            const s = document.createElement('script');
+            s.src = '//www.instagram.com/embed.js';
+            s.async = true;
+            s.defer = true;
+            s.onload = cb;
+            document.body.appendChild(s);
+        }
+
+        function openModalWith(permalink) {
+            // insert blockquote
+            modalBody.querySelectorAll('blockquote.instagram-media').forEach(n => n.remove());
+            const block = document.createElement('blockquote');
+            block.className = 'instagram-media';
+            block.setAttribute('data-instgrm-permalink', permalink + '?utm_source=ig_embed&amp;utm_campaign=loading');
+            block.setAttribute('data-instgrm-version', '14');
+            block.style = 'background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:99%; padding:0;';
+            block.innerHTML = '<div style="padding:16px;"><a href="' + permalink + '" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a></div>';
+            modalBody.insertBefore(block, modalBody.firstChild);
+
+            // load/initialize embed script then process
+            loadInstagramEmbedScript(function() {
+                try { window.instgrm.Embeds.process(); } catch (e) { /* ignore */ }
+            });
+
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            // cleanup injected blockquote if any
+            modalBody.querySelectorAll('blockquote.instagram-media').forEach(n => n.remove());
+        }
+
+        thumbs.forEach(t => {
+            t.addEventListener('click', () => {
+                const pl = t.dataset.permalink || t.getAttribute('data-permalink');
+                if (!pl) return window.open('https://www.instagram.com/', '_blank');
+                openModalWith(pl);
+            });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
     })();
 
 </script>
