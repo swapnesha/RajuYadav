@@ -265,6 +265,7 @@
         .lightbox-prev { left: 20px; top: 50%; transform: translateY(-50%); }
         .lightbox-next { right: 20px; top: 50%; transform: translateY(-50%); }
         .lightbox-caption {
+            display: none !important;
             color: #fff;
             margin-top: 10px;
             text-align: center;
@@ -328,8 +329,9 @@
             <img class="news-thumb" src="./Images/newsImg_7.jpeg" alt="News 7" data-full="./Images/newsImg_7.jpeg">
             <img class="news-thumb" src="./Images/newsImg_8.jpeg" alt="News 8" data-full="./Images/newsImg_8.jpeg">
             <img class="news-thumb" src="./Images/newsImg_9.jpg" alt="News 9" data-full="./Images/newsImg_9.jpeg">
-            <img class="news-thumb" src="./Images/newsImg_10.jpg" alt="News 10" data-full="./Images/newsImg_10jpeg">
-            <img class="news-thumb" src="./Images/newsImg_11.jpg" alt="News 11" data-full="./Images/newsImg_11jpeg">
+            <img class="news-thumb" src="./Images/newsImg_10.jpg" alt="News 10" data-full="./Images/newsImg_10.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_11.jpg" alt="News 11" data-full="./Images/newsImg_11.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_12.jpg" alt="News 12" data-full="./Images/newsImg_12.jpeg">
         </div>
     </div>
 </section> 
@@ -465,7 +467,6 @@
 
         function openLightbox(index) {
             currentIndex = index;
-            lbCaption.textContent = imgs[currentIndex].alt;
             lbImg._triedFallback = false;
             // attempt primary src
             const primary = imgs[currentIndex].src;
@@ -494,7 +495,7 @@
                     }
                     // give up
                     lbImg.style.display = 'none';
-                    lbCaption.textContent = 'Image not available';
+                    // caption hidden
                 } else {
                     lbImg._triedFallback = true;
                     // try thumbnail first if primary is different
@@ -507,14 +508,13 @@
                     if (alt !== primary) setSrc(alt);
                     else {
                         lbImg.style.display = 'none';
-                        lbCaption.textContent = 'Image not available';
+                        // caption hidden
                     }
                 }
             };
 
             lbImg.onload = function() {
                 lbImg.style.display = 'block';
-                lbCaption.textContent = imgs[currentIndex].alt || '';
             };
 
             setSrc(primary);
