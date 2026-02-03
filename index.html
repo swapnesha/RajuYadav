@@ -207,7 +207,70 @@
             width: 200px;
             height: 200px;
         }
-    </style>
+
+        /* News gallery thumbnails */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 12px;
+            align-items: start;
+        }
+        .news-thumb {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: zoom-in;
+            transition: transform .18s ease, box-shadow .18s ease;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+        .news-thumb:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            padding: 20px;
+        }
+        .lightbox.open { display:flex; }
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+        }
+        .lightbox-close, .lightbox-prev, .lightbox-next {
+            position: absolute;
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size: 20px;
+        }
+        .lightbox-close { top: 20px; right: 20px; }
+        .lightbox-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+        .lightbox-next { right: 20px; top: 50%; transform: translateY(-50%); }
+        .lightbox-caption {
+            color: #fff;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style> 
 </head>
 <body>
 
@@ -251,10 +314,25 @@
 
 <section class="resources">
     <h2>चालू सहकार्य</h2>
-    <img  src="./Images/bannerImg_1.jpeg" alt="Resource">
-    <img src="./Images/bannerImg_2.jpeg" alt="Resource">
-    <img src="./Images/bannerImg_3.jpeg" alt="Resource">
-</section>
+    <div class="news-gallery">
+        <div class="news-grid">
+            <img class="news-thumb" src="./Images/bannerImg_1.jpeg" alt="News banner 1" data-full="./Images/bannerImg_1.jpeg">
+            <img class="news-thumb" src="./Images/bannerImg_2.jpeg" alt="News banner 2" data-full="./Images/bannerImg_2.jpeg">
+            <img class="news-thumb" src="./Images/bannerImg_3.jpeg" alt="News banner 3" data-full="./Images/bannerImg_3.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_1.jpeg" alt="News 1" data-full="./Images/newsImg_1.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_2.jpeg" alt="News 2" data-full="./Images/newsImg_2.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_3.jpeg" alt="News 3" data-full="./Images/newsImg_3.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_4.jpeg" alt="News 4" data-full="./Images/newsImg_4.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_5.jpeg" alt="News 5" data-full="./Images/newsImg_5.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_6.jpeg" alt="News 6" data-full="./Images/newsImg_6.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_7.jpeg" alt="News 7" data-full="./Images/newsImg_7.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_8.jpeg" alt="News 8" data-full="./Images/newsImg_8.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_9.jpg" alt="News 9" data-full="./Images/newsImg_9.jpeg">
+            <img class="news-thumb" src="./Images/newsImg_10.jpg" alt="News 10" data-full="./Images/newsImg_10jpeg">
+            <img class="news-thumb" src="./Images/newsImg_11.jpg" alt="News 11" data-full="./Images/newsImg_11jpeg">
+        </div>
+    </div>
+</section> 
 
 <section class="video-gallery">
     <h2>व्हिडिओ गॅलरी</h2>
@@ -355,6 +433,65 @@
             if (e.key === 'ArrowLeft') showPrev();
         });
     })();
+
+    // News gallery lightbox
+    (function() {
+        const thumbs = Array.from(document.querySelectorAll('.news-thumb'));
+        if (thumbs.length === 0) return;
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox';
+        lightbox.innerHTML = `
+            <button class="lightbox-close" aria-label="Close">&times;</button>
+            <button class="lightbox-prev" aria-label="Previous">&#10094;</button>
+            <img class="lightbox-img" src="" alt="">
+            <button class="lightbox-next" aria-label="Next">&#10095;</button>
+            <div class="lightbox-caption" aria-live="polite"></div>
+        `;
+        document.body.appendChild(lightbox);
+
+        const lbImg = lightbox.querySelector('.lightbox-img');
+        const lbCaption = lightbox.querySelector('.lightbox-caption');
+        const closeBtn = lightbox.querySelector('.lightbox-close');
+        const prevBtn = lightbox.querySelector('.lightbox-prev');
+        const nextBtn = lightbox.querySelector('.lightbox-next');
+
+        let currentIndex = 0;
+        const imgs = thumbs.map(t => ({src: t.dataset.full || t.src, alt: t.alt || ''}));
+
+        function openLightbox(index) {
+            currentIndex = index;
+            lbImg.src = imgs[currentIndex].src;
+            lbImg.alt = imgs[currentIndex].alt;
+            lbCaption.textContent = imgs[currentIndex].alt;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function showNext() {
+            openLightbox((currentIndex + 1) % imgs.length);
+        }
+        function showPrev() {
+            openLightbox((currentIndex - 1 + imgs.length) % imgs.length);
+        }
+
+        thumbs.forEach((t, i) => t.addEventListener('click', () => openLightbox(i)));
+        closeBtn.addEventListener('click', closeLightbox);
+        nextBtn.addEventListener('click', showNext);
+        prevBtn.addEventListener('click', showPrev);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+        });
+    })();
+
 </script>
 
 </body>
