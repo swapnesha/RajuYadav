@@ -198,14 +198,15 @@
             align-items: start;
         }
         .instagram-reels .insta-grid {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
             width: 100%;
+            align-items: start;
         }
         .instagram-reels img { max-width: 160px; border-radius: 6px; }
-        .instagram-reels .insta-embed { width: 100%; max-width: 540px; }
+        .instagram-reels .insta-embed { width: 100%; max-width: 540px; margin: 0 auto; }
+        .instagram-reels .instagram-media { width: 100% !important; min-width: 0 !important; }
         .instagram-reels .insta-fallback { font-size: 14px; text-align: center; margin-top: 8px; }
         .instagram-reels .insta-fallback a { color: #0066cc; text-decoration: underline; }
 
@@ -463,32 +464,34 @@
 <section class="instagram-reels">
     <h2>Instagram Reels</h2>
     <div class="insta-grid">
-        <!-- Thumbnail that opens modal -->
-        <img class="insta-thumb" src="./Images/reelThumbs/reelThumb_1.png" alt="Reel thumbnail" data-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/">
-        <img class="insta-thumb" src="./Images/reelThumbs/reelThumb_1.png" alt="Reel thumbnail" data-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/">
-        <img class="insta-thumb" src="./Images/reelThumbs/reelThumb_1.png" alt="Reel thumbnail" data-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/">
-    </div>
-
-    <div class="insta-embed" style="margin-top:12px;">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:99%; padding:0;">
-            <div style="padding:16px;">
-                <a href="https://www.instagram.com/reel/DUTIT3bDXZZ/" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a>
-            </div>
-        </blockquote>
-        <script async defer src="//www.instagram.com/embed.js"></script>
-        <div class="insta-fallback">If the reel doesn't load here, <a href="https://www.instagram.com/reel/DUTIT3bDXZZ/" target="_blank" rel="noopener noreferrer">open it on Instagram</a>.</div>
-    </div>
-
-    <!-- Modal for playing reel on same page -->
-    <div class="insta-modal" id="insta-modal" aria-hidden="true">
-        <div class="insta-modal-content" role="dialog" aria-modal="true">
-            <button class="close-btn" id="insta-close" aria-label="Close">&times;</button>
-            <div class="insta-modal-body" id="insta-modal-body">
-                <!-- blockquote is injected here when modal opens -->
-                <div class="insta-fallback">If the reel doesn't load here, <a href="https://www.instagram.com/reel/DUTIT3bDXZZ/" target="_blank" rel="noopener noreferrer">open it on Instagram</a>.</div>
-            </div>
+        <div class="insta-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUTIT3bDXZZ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:100%; padding:0;">
+                <div style="padding:16px;"><a href="https://www.instagram.com/reel/DUTIT3bDXZZ/" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a></div>
+            </blockquote>
+        </div>
+        <div class="insta-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUSoRcRFBvJ/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:100%; padding:0;">
+                <div style="padding:16px;"><a href="https://www.instagram.com/reel/DUSoRcRFBvJ/" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a></div>
+            </blockquote>
+        </div>
+        <div class="insta-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUSiu0yjbQh/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:100%; padding:0;">
+                <div style="padding:16px;"><a href="https://www.instagram.com/reel/DUSiu0yjbQh/" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a></div>
+            </blockquote>
+        </div>
+        <div class="insta-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUSXoFMElrk/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:100%; padding:0;">
+                <div style="padding:16px;"><a href="https://www.instagram.com/reel/DUSXoFMElrk/" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a></div>
+            </blockquote>
+        </div>
+        <div class="insta-embed">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUAo9_ejQpr/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:100%; padding:0;">
+                <div style="padding:16px;"><a href="https://www.instagram.com/reel/DUAo9_ejQpr/" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a></div>
+            </blockquote>
         </div>
     </div>
+    <script async defer src="//www.instagram.com/embed.js"></script>
+    <div class="insta-fallback">If reels don't load here, <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">open Instagram</a>.</div>
 </section> 
 
 <footer>
@@ -690,79 +693,7 @@
         });
     })();
 
-    // Instagram modal for reel thumbnail
-    (function() {
-        const thumbs = Array.from(document.querySelectorAll('.insta-thumb'));
-        if (!thumbs.length) return;
-        const modal = document.getElementById('insta-modal');
-        const modalBody = document.getElementById('insta-modal-body');
-        const closeBtn = document.getElementById('insta-close');
-
-        function loadInstagramEmbedScript(cb) {
-            if (window.instgrm && typeof window.instgrm.Embeds !== 'undefined') {
-                cb();
-                return;
-            }
-            // load script once
-            if (document.querySelector('script[src="//www.instagram.com/embed.js"]')) {
-                // wait for it to initialize
-                const t = setInterval(() => {
-                    if (window.instgrm && window.instgrm.Embeds) {
-                        clearInterval(t);
-                        cb();
-                    }
-                }, 150);
-                return;
-            }
-            const s = document.createElement('script');
-            s.src = '//www.instagram.com/embed.js';
-            s.async = true;
-            s.defer = true;
-            s.onload = cb;
-            document.body.appendChild(s);
-        }
-
-        function openModalWith(permalink) {
-            // insert blockquote
-            modalBody.querySelectorAll('blockquote.instagram-media').forEach(n => n.remove());
-            const block = document.createElement('blockquote');
-            block.className = 'instagram-media';
-            block.setAttribute('data-instgrm-permalink', permalink + '?utm_source=ig_embed&amp;utm_campaign=loading');
-            block.setAttribute('data-instgrm-version', '14');
-            block.style = 'background:#FFF; border:0; margin: 0 auto; max-width:540px; min-width:326px; width:99%; padding:0;';
-            block.innerHTML = '<div style="padding:16px;"><a href="' + permalink + '" target="_blank" rel="noopener noreferrer">Watch this reel on Instagram</a></div>';
-            modalBody.insertBefore(block, modalBody.firstChild);
-
-            // load/initialize embed script then process
-            loadInstagramEmbedScript(function() {
-                try { window.instgrm.Embeds.process(); } catch (e) { /* ignore */ }
-            });
-
-            modal.classList.add('open');
-            modal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            modal.classList.remove('open');
-            modal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-            // cleanup injected blockquote if any
-            modalBody.querySelectorAll('blockquote.instagram-media').forEach(n => n.remove());
-        }
-
-        thumbs.forEach(t => {
-            t.addEventListener('click', () => {
-                const pl = t.dataset.permalink || t.getAttribute('data-permalink');
-                if (!pl) return window.open('https://www.instagram.com/', '_blank');
-                openModalWith(pl);
-            });
-        });
-
-        closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-    })();
+    // Removed modal-based thumbnail embed — using inline grid embeds now.
 
 </script>
 
