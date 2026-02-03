@@ -434,7 +434,7 @@
         });
     })();
 
-    // News gallery lightbox
+    // News gallery lightbox (robust image loading for jpeg/jpg)
     (function() {
         const thumbs = Array.from(document.querySelectorAll('.news-thumb'));
         if (thumbs.length === 0) return;
@@ -456,13 +456,68 @@
         const nextBtn = lightbox.querySelector('.lightbox-next');
 
         let currentIndex = 0;
-        const imgs = thumbs.map(t => ({src: t.dataset.full || t.src, alt: t.alt || ''}));
+        const imgs = thumbs.map(t => ({src: t.dataset.full || t.src, thumb: t.src, alt: t.alt || ''}));
+
+        function tryAlternateExt(url) {
+            // try swapping .jpg <-> .jpeg
+            return url.replace(/\.(jpe?g)$/i, (m, ext) => (ext.toLowerCase() === 'jpg' ? '.jpeg' : '.jpg'));
+        }
 
         function openLightbox(index) {
             currentIndex = index;
-            lbImg.src = imgs[currentIndex].src;
-            lbImg.alt = imgs[currentIndex].alt;
             lbCaption.textContent = imgs[currentIndex].alt;
+            lbImg._triedFallback = false;
+            // attempt primary src
+            const primary = imgs[currentIndex].src;
+            const thumb = imgs[currentIndex].thumb;
+
+            function setSrc(src) {
+                lbImg.style.display = 'block';
+                lbImg.src = src;
+                lbImg.alt = imgs[currentIndex].alt;
+            }
+
+            lbImg.onerror = function() {
+                if (lbImg._triedFallback) {
+                    // try swapping extension
+                    const alt = tryAlternateExt(lbImg.src);
+                    if (alt !== lbImg.src) {
+                        lbImg._triedFallback = 'alt-ext';
+                        setSrc(alt);
+                        return;
+                    }
+                    // try thumbnail as final fallback
+                    if (thumb && thumb !== lbImg.src) {
+                        lbImg._triedFallback = 'thumb';
+                        setSrc(thumb);
+                        return;
+                    }
+                    // give up
+                    lbImg.style.display = 'none';
+                    lbCaption.textContent = 'Image not available';
+                } else {
+                    lbImg._triedFallback = true;
+                    // try thumbnail first if primary is different
+                    if (thumb && thumb !== primary) {
+                        setSrc(thumb);
+                        return;
+                    }
+                    // else try alternate extension
+                    const alt = tryAlternateExt(primary);
+                    if (alt !== primary) setSrc(alt);
+                    else {
+                        lbImg.style.display = 'none';
+                        lbCaption.textContent = 'Image not available';
+                    }
+                }
+            };
+
+            lbImg.onload = function() {
+                lbImg.style.display = 'block';
+                lbCaption.textContent = imgs[currentIndex].alt || '';
+            };
+
+            setSrc(primary);
             lightbox.classList.add('open');
             document.body.style.overflow = 'hidden';
         }
