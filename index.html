@@ -12,22 +12,89 @@
             background-color: #f5f5f5;
         }
         header {
+            position: relative;
             background-color: #ff880a;
             text-align: center;
-            padding: 20px;
+            padding: 70px;
         }
-        header img {
-            max-width: 100px;
+        header img { max-width: 100px; }
+
+        /* Balasaheb image in top-right of header */
+        .header-balasaheb {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.9);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+            display: block;
         }
+        @media (max-width:480px) {
+            .header-balasaheb {         
+                width: 65px;
+                height: 65px;
+                top: 5px;
+                right: 10px; 
+            }
+        }
+
         .profile-section {
-            text-align: center;
-            padding: 20px;
-            background-color: #ffffff;
-            margin: 20px auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            /* padding: 30px 16px 8px;
+            margin: 20px auto; */
         }
+        .profile-card {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            /* orange-only soft gradient */
+            background: linear-gradient(180deg, #fff7f0 0%, #ffe5cc 45%, #ff9d2b 100%);
+            border-radius: 28px;
+            padding: 80px 20px 24px; /* space for overlapping image */
+            box-shadow: 0 20px 40px rgba(16,24,40,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+            text-align: center;
+            overflow: visible;
+        }
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            pointer-events: none;
+        }
+        .profile-img {
+            position: absolute;
+            top: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: contain;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+            border: 6px solid #fff;
+            background: #fff;
+        }
+
+        .profile-details { margin-top: 6px; }
+        .profile-details h2 { margin: 8px 0 6px; font-size: 1.25rem; font-weight:700; color:#1f2937; }
+        .info-list { display:flex; flex-direction:column; gap:12px; margin-top:12px; }
+        .info-pill { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:14px; background: linear-gradient(90deg, #fff3ea, #fff7ef); box-shadow: 0 6px 18px rgba(0,0,0,0.06); color:#0f172a; }
+        .info-pill .pill-icon { width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:50%; background: rgba(255,255,255,0.8); box-shadow: inset 0 -2px 0 rgba(0,0,0,0.03); font-size:18px; }
+        .info-pill.primary { background: linear-gradient(90deg,#ffb36b,#ff7a00); color:#fff; font-weight:700; }
+        .info-pill.primary .pill-icon { background: rgba(255,255,255,0.18); color:#fff; }
+
+        @media (min-width:760px) {
+            .profile-card { max-width:920px; display:flex; align-items:center; padding: 28px 28px 28px 200px; text-align:left; }
+            .profile-img { position:absolute; top: 28px; left: 28px; transform:none; width: 160px; height:160px; }
+            .profile-details { margin-top:0; }
+            .info-list { gap:14px; }
+        }
+
         .gallery, .resources, .video-gallery, .instagram-reels {
             margin: 20px auto;
             max-width: 1200px;
@@ -394,14 +461,23 @@
 
 <header>
     <img src="./Images/logo/Logo.jpg" alt="Logo">
-    <h1>शिवसेना - उद्धव बाळासाहेब ठाकरे</h1>
+    <img class="header-balasaheb" src="./Images/BalasahebImg.jpeg" alt="Balasaheb" aria-hidden="true">
+    <h3>शिवसेना - उद्धव बाळासाहेब ठाकरे</h3>
 </header>
 
-<section class="profile-section">
-    <h2>श्री अनिल बापू यादव</h2>
-    <p>उचगाव जिल्हा परिषद 37</p>
-    <p>मोबाइल: 9503086767</p>
-    <p>ईमेल: raju_yadav_5475@gmail.com</p>
+<section class="profile-section" aria-label="Profile section">
+    <div class="profile-card">
+        <img class="profile-img" src="./Images/ProfileImg1.jpg" alt="Profile image of श्री अनिल बापू यादव">
+
+        <div class="profile-details">
+            <div class="info-list">
+                <div class="info-pill primary"><span class="pill-icon">👤</span><span>श्री अनिल बापू यादव</span></div>
+                <div class="info-pill"><span class="pill-icon">📍</span><span>उचगाव जिल्हा परिषद 37</span></div>
+                <div class="info-pill"><span class="pill-icon">📞</span><span>9503086767</span></div>
+                <div class="info-pill"><span class="pill-icon">✉️</span><span>raju_yadav_5475@gmail.com</span></div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <section class="gallery">
