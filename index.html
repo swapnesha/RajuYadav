@@ -375,7 +375,36 @@
             text-align: center;
             padding: 20px;
             background-color: #d9f0ff;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
         }
+
+        .socials {
+            display:flex;
+            gap:12px;
+            align-items:center;
+            justify-content:center;
+            margin-top:6px;
+        }
+        .social-link {
+            display:inline-flex;
+            width:36px;
+            height:36px;
+            align-items:center;
+            justify-content:center;
+            border-radius:6px;
+            background:#fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-decoration:none;
+            color:#111;
+            transition: transform .12s ease;
+        }
+        .social-link:hover { transform: translateY(-3px); }
+        .social-link svg{ width:20px; height:20px; display:block; }
+        .social-link.youtube{ background: linear-gradient(90deg,#FF0000,#FF6B6B); color:#fff; }
+        .social-link.instagram{ background: radial-gradient(circle at 30% 107%, #fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%); color:#fff; }
 
         /* Modal Styles */
         .modal {
@@ -606,7 +635,15 @@
 </section> 
 
 <footer>
-    <p>&copy; 2026 Profile Page</p>
+    <div>©https://swapnesha.github.io सर्व हक्क राखीव.</div>
+    <div class="socials" aria-label="Social links">
+        <a href="https://youtube.com/channel/UCtLEBupR0qP1SUXaYPYTXtA?si=r7Hyv4oBkKQN4E0I" class="social-link youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube channel">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.499 6.203a3 3 0 00-2.117-2.117C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.382.586A3 3 0 00.5 6.203 31.997 31.997 0 000 12a31.997 31.997 0 00.5 5.797 3 3 0 002.118 2.117C4.3 20.5 12 20.5 12 20.5s7.7 0 9.382-.586a3 3 0 002.117-2.117A31.997 31.997 0 0024 12a31.997 31.997 0 00-.501-5.797zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/raju_yadav_5475?igsh=dzVqNGRqMnY3eDh6" class="social-link instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram profile">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5A4.25 4.25 0 0020.5 16.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zM17.5 6.25a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"/></svg>
+        </a>
+    </div>
 </footer>
 
 <!-- Modal Popup -->
