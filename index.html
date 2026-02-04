@@ -95,6 +95,34 @@
             .info-list { gap:14px; }
         }
 
+        /* Declaration card styles */
+        .declaration-section {
+            display: flex;
+            justify-content: center;
+            margin: 20px 16px;
+        }
+        .declaration-card {
+            max-width: 920px;
+            background: linear-gradient(180deg, #fffef6 0%, #fff0dc 40%, #ffd19a 100%);
+            border-radius: 18px;
+            padding: 20px 18px;
+            box-shadow: 0 12px 30px rgba(16,24,40,0.08);
+            text-align: left;
+            color: #0f172a;
+        }
+        .declaration-card h2 { margin: 0 0 8px; font-size:1.25rem; color:#1f2937; }
+        .declaration-text { line-height:1.6; white-space:normal; font-size:1rem; }
+        .cta-btn {
+            background: #ff7a00;
+            color:#fff;
+            border:none;
+            padding:10px 16px;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:700;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+
         .gallery, .resources, .video-gallery, .instagram-reels {
             margin: 20px auto;
             max-width: 1200px;
@@ -480,6 +508,16 @@
     </div>
 </section>
 
+<section class="declaration-section" aria-label="Declaration section">
+    <div class="declaration-card">
+        <h2>मी राजू — तुमचा आवाज</h2>
+        <p class="declaration-text">मी राजू (अनिल बापू यादव)… उचगाव जिल्हा परिषद मतदारसंघ क्रमांक ३७ मधून ‘मशाल’ या चिन्हावर तुमच्यासाठी उभा आहे. राजकारणासाठी नव्हे, तर समाजकारणासाठी; सत्तेसाठी नव्हे, तर सेवेसाठी. तुमच्या पाण्यापासून रस्त्यांपर्यंत, शिक्षणापासून रोजगारापर्यंत प्रत्येक प्रश्न माझा आहे, प्रत्येक वेदना माझी आहे. ‘आपला राजू’ म्हणून तुमचा विश्वास जपणं हीच माझी ओळख आहे. शनिवार, ७ फेब्रुवारी २०२६ रोजी ‘मशाल’ चिन्हासमोरील बटन दाबून जनशक्तीच्या या लढ्यात मला साथ द्या.</p>
+        <div style="text-align:center; margin-top:12px;">
+            <button class="cta-btn" id="support-btn" aria-label="Support Raju">मशाल चिन्हावर बटन दाबा</button>
+        </div>
+    </div>
+</section>
+
 <section class="gallery">
     <h2>कार्य गॅलरी</h2>
     <div class="carousel" aria-roledescription="carousel">
@@ -495,6 +533,9 @@
                 <li class="carousel-slide">
                     <img class="carousel-image" src="./pamplet3.jpeg" alt="Pamplet 3">
                 </li>
+                <li class="carousel-slide">
+                    <img class="carousel-image" src="./pamplet4.jpeg" alt="Pamplet 3">
+                </li>
             </ul>
         </div>
         <button class="carousel-button next" aria-label="Next slide">&#10095;</button>
@@ -502,6 +543,7 @@
             <button class="carousel-dot current-slide" aria-label="Slide 1"></button>
             <button class="carousel-dot" aria-label="Slide 2"></button>
             <button class="carousel-dot" aria-label="Slide 3"></button>
+            <button class="carousel-dot" aria-label="Slide 4"></button>
         </div>
     </div>
 </section>
@@ -761,6 +803,14 @@
             if (e.key === 'ArrowLeft') showPrev();
         });
     })();
+
+    // Button handler for declaration card CTA
+    const supportBtn = document.getElementById('support-btn');
+    if (supportBtn) {
+        supportBtn.addEventListener('click', () => {
+            alert('आपल्या साथीसाठी धन्यवाद! कृपया मतदानासाठी वेळ पहा आणि “मशाल” चिन्हावर मतदान करा.');
+        });
+    }
 
     // Removed modal-based thumbnail embed — using inline grid embeds now.
 
